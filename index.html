@@ -389,6 +389,14 @@
         function renderWeatherData(data) {
             const { current } = data;
 
+            if(!current || !current.weather || !current.weather[0] || !current.main) {
+                console.error('Błędne dane pogodowe:', current);
+                document.getElementById('weatherContent').innerHTML = '
+                    <div class="error">Błąd: Nieprawidłowe dane pogodowe dla miasta "${currentCity}"</div>
+                ';
+                return;
+            }
+            
             const weatherHTML = `
                 <div class="current-weather">
                     <div class="weather-icon">${getWeatherIcon(current.weather[0].icon)}</div>
